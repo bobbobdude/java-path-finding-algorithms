@@ -1,0 +1,1 @@
+Thanks go out to Eric Perdew, Ryan Pindulic, and Ethan Cecchetti from the Department of Computer Science at Cornell for the basis of this coursework.

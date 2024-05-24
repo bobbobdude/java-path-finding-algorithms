@@ -1,0 +1,27 @@
+{
+	"title": "The Temple of Gloom",
+	"theme": "light",
+	"scripts": [],
+	"lexikonTopic": "",
+	"suppressPageNumbering": false,
+	"useSubmitButtons": true,
+	"useMarkAsComplete": true,
+	"hideMenu": false,
+	"allowGuideClose": false,
+	"collapsedOnStart": false,
+	"hideSectionsToggle": false,
+	"hideBackToDashboard": false,
+	"protectLayout": false,
+	"order": [
+		"Coursework-Brief-571f",
+		"Objectives-b610",
+		"Overview-1e9d",
+		"The-exploration-phase-1726",
+		"The-escape-phase-9381",
+		"The-provided-code-2e56",
+		"The-GUI-2501",
+		"The-deliverables-c3c8",
+		"Additional-grading-criteria-5f74",
+		"Credits-52ef"
+	]
+}
