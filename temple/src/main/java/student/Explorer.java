@@ -2,6 +2,12 @@ package student;
 
 import game.EscapeState;
 import game.ExplorationState;
+import game.NodeStatus;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Random;
 
 public class Explorer {
 
@@ -37,6 +43,8 @@ public class Explorer {
      */
     public void explore(ExplorationState state) {
         //TODO : Explore the cavern and find the orb
+        DFS dfs = new DFS();
+        dfs.beginDFS2(state);
     }
 
     /**
