@@ -3,12 +3,16 @@ package student;
 import game.ExplorationState;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
 
 public class DFS {
     public void beginDFS2(ExplorationState state) {
-        ArrayList<Long> visited = new ArrayList<>();
+        Set<Long> visited = new HashSet<>(); //Changed to hashset as more efficient -> O(n) to O(1)
         visited.add(state.getCurrentLocation()); //Adds the stairs to the visited array, so we don't go back to them
-        ArrayList<Long> neighbours;
+        Collection<Long> neighbours;
         ArrayList<Long> path = new ArrayList<>();
 
         while (state.getDistanceToTarget() > 0) {
