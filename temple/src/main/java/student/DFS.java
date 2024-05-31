@@ -10,7 +10,7 @@ import java.util.Set;
 /**
  * This class is responsible for providing a beginDFS method that will
  * always return at the orb after searching through the maze in a "depthward"
- * manner, backtracking when necessary to find an unlisted tile
+ * manner, backtracking when necessary to find an unvisited tile
  *
  * @author Thomas Gardner
  */
