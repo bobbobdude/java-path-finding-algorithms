@@ -2,16 +2,14 @@ package student;
 
 import game.ExplorationState;
 import game.NodeStatus;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class DFSHelperTest {
@@ -43,12 +41,34 @@ public class DFSHelperTest {
 
     @Test
     void testAmIStuckWhenStuck(){
-        //TODO
+        Mockito.when(mockNodeStatus1.nodeID()).thenReturn(1L);
+        Mockito.when(mockNodeStatus2.nodeID()).thenReturn(2L);
+        Mockito.when(mockState.getNeighbours()).thenReturn(Arrays.asList(mockNodeStatus1, mockNodeStatus2));
+
+        Set<Long> visited = new HashSet<>(List.of(1L, 2L));
+        boolean result = DFSHelper.amIStuck(mockState, visited);
+        assertTrue(result, "The explorer should be stuck as all neighbors are visited.");
     }
 
     @Test
     void testConvertNeighboursToLongs(){
-        //TODO
+        Mockito.when(mockNodeStatus1.nodeID()).thenReturn(1L);
+        Mockito.when(mockNodeStatus2.nodeID()).thenReturn(2L);
+
+        Collection<NodeStatus> nodeStatuses= Arrays.asList(mockNodeStatus1, mockNodeStatus2);
+
+        Mockito.when(mockState.getNeighbours()).thenReturn(nodeStatuses);
+
+        Collection<Long> result = DFSHelper.convertNeighboursToLongs(mockState);
+
+        assertEquals(Arrays.asList(1L, 2L), result, "The nodeID list should be the same as the nodeID's that are manually added.");
+
+    }
+
+    //Implemented tear down after each test as per Johno's recommendation
+    @AfterEach
+    void tearDown() {
+        Mockito.reset(mockState, mockNodeStatus1, mockNodeStatus2);
     }
 
 
