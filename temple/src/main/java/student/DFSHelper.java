@@ -1,6 +1,8 @@
 package student;
 
+import game.EscapeState;
 import game.ExplorationState;
+import game.Node;
 import game.NodeStatus;
 
 import java.util.Collection;
@@ -29,6 +31,25 @@ public class DFSHelper {
     public static boolean amIStuck(ExplorationState state, Set<Long> visited){
         return state.getNeighbours().stream().map(NodeStatus::nodeID).allMatch(visited::contains);
     }
+
+    public static boolean amIStuck(EscapeState state, Set<Node> visited){
+        return state.getCurrentNode().getNeighbours().stream().allMatch(visited::contains);
+    }
+
+    public static boolean amIAtExit(EscapeState state){
+        Node exit = state.getExit();
+        Node currentSpot = state.getCurrentNode();
+        return exit.equals(currentSpot);
+    }
+
+    public static void pickUpGoldIfExistsAndHandleErrorIfNot(EscapeState state){
+        try{
+            state.pickUpGold();
+        }catch (IllegalStateException e){
+            //If no gold on tile carry on
+        }
+    }
+
 
     /**
      * Converts the neighbors of the current state to their respective node IDs, as this is how my code keeps track of visited nodes and creates the path.

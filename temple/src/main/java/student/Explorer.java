@@ -2,12 +2,6 @@ package student;
 
 import game.EscapeState;
 import game.ExplorationState;
-import game.NodeStatus;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
 
 public class Explorer {
 
@@ -72,5 +66,7 @@ public class Explorer {
      */
     public void escape(EscapeState state) {
         //TODO: Escape from the cavern before time runs out
+        DFSEscape DFSe = new DFSEscape();
+        DFSe.dfsEscape(state);
     }
 }
