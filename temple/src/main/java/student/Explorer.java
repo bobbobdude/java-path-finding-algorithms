@@ -2,6 +2,9 @@ package student;
 
 import game.EscapeState;
 import game.ExplorationState;
+import game.Node;
+
+import java.util.*;
 
 public class Explorer {
 
@@ -63,6 +66,16 @@ public class Explorer {
      * @param state the information available at the current state
      */
     public void escape(EscapeState state) {
-        //TODO: Escape from the cavern before time runs out
+        AStar pathFinder = new AStar();
+        Node start = state.getCurrentNode();
+        Node exit = state.getExit();
+        List<Node> path = pathFinder.findPath(start, exit);
+
+        for (Node node : path) {
+            state.moveTo(node);
+            if (state.getCurrentNode().getTile().getGold() > 0) {
+                state.pickUpGold();
+            }
+        }
     }
 }

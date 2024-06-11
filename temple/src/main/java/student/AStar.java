@@ -1,11 +1,21 @@
 package student;
 
 import game.Node;
+import lombok.Getter;
+
 import java.util.*;
 
-public class PathFinder {
+public class AStar {
 
-    public PathFinder() {}
+    private record NodeWrapper(@Getter Node node, double fScore) implements Comparable<NodeWrapper> {
+
+        @Override
+            public int compareTo(NodeWrapper other) {
+                return Double.compare(this.fScore, other.fScore);
+            }
+        }
+
+    public AStar() {}
 
     /**
      * Given a starting point and a target to reach, calculate the optimal path
@@ -17,7 +27,7 @@ public class PathFinder {
      */
     public List<Node> findPath(Node start, Node target) {
         // Nodes to visit
-        PriorityQueue<Node> open = new PriorityQueue<>();
+        PriorityQueue<NodeWrapper> open = new PriorityQueue<>();
         // Nodes that have already been visited
         Set<Node> closed = new HashSet<>();
 
@@ -30,17 +40,18 @@ public class PathFinder {
         Map<Node, Double> fScores = new HashMap<>();
 
         // Prepare for traversal
-        open.add(start);
         gScores.put(start, 0.0);
         fScores.put(start, heuristic(start, target));
+        open.add(new NodeWrapper(start, fScores.get(start)));
 
         // Start traversal
         while (!open.isEmpty()) {
-            Node cur = open.poll();
+            NodeWrapper curWrapper = open.poll();
+            Node cur = curWrapper.node();
 
             // Target found, time to get path travelled and exit
             if (cur.equals(target)) {
-                return constructPath(cur);
+                return constructPath(start, cur, parents);
             }
             closed.add(cur);
 
@@ -49,7 +60,6 @@ public class PathFinder {
                     // Check if g score for neighbour already exists, meaning it is already visited
                     double currentGScore = gScores.getOrDefault(neighbour, Double.POSITIVE_INFINITY);
                     // Calculate new g score from distance between current node and neighbour
-                    // @TODO Find new way of calculating movement cost as it depends on explore or escape being undertaken
                     double newGScore = gScores.getOrDefault(cur, Double.POSITIVE_INFINITY) + heuristic(cur, neighbour);
                     /*
                      If new g score is lower, path through current node is better than any
@@ -58,7 +68,7 @@ public class PathFinder {
                     if (newGScore < currentGScore) {
                         gScores.put(neighbour, newGScore);
                         fScores.put(neighbour, newGScore);
-                        open.add(neighbour);
+                        open.add(new NodeWrapper(neighbour, newGScore));
                         parents.put(neighbour, cur);
                     }
                 }
@@ -74,12 +84,11 @@ public class PathFinder {
      * @param node Node to traverse upwards from
      * @return List containing the path from a starting point (root) to the given node
      */
-    private static List<Node> constructPath(Node node, Map<Node, Node> parents) {
+    private static List<Node> constructPath(Node start, Node node, Map<Node, Node> parents) {
         List<Node> path = new ArrayList<>();
         // Traverse up until root, aka start point
-        while (node != null) {
+        while (node != null && !node.equals(start)) {
             path.add(node);
-            // Move up one level
             node = parents.get(node);
         }
         // Reverse to get path starting from root
