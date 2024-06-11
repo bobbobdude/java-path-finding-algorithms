@@ -14,9 +14,11 @@ We follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0
 ## Documentation
 All public classes and methods must include full Javadoc comments. This ensures that the code is well-documented and easy to understand for all contributors.
 
-## Binary and .class files
+## What to Commit
 
-Please do not commit any binary files or .class files to the repository. These files should be added to your .gitignore file. Only commit source code and necessary configuration files.
+Only commit **source code** and **necessary configuration files**.
+
+Please do not commit any binary files or .class files to the repository. These files should be added to your .gitignore file.
 
 ## Pull Requests
 To ensure code quality and consistency, each pull request must:
