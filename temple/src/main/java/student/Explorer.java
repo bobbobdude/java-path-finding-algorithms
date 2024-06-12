@@ -66,16 +66,8 @@ public class Explorer {
      * @param state the information available at the current state
      */
     public void escape(EscapeState state) {
-        AStar pathFinder = new AStar();
-        Node start = state.getCurrentNode();
-        Node exit = state.getExit();
-        List<Node> path = pathFinder.findPath(start, exit);
-
-        for (Node node : path) {
-            state.moveTo(node);
-            if (state.getCurrentNode().getTile().getGold() > 0) {
-                state.pickUpGold();
-            }
-        }
+        Collection<Node> cavernNodes = state.getVertices();
+        AStar aStar = new AStar(cavernNodes);
+        aStar.traverse(state);
     }
 }
