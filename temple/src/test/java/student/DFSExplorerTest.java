@@ -11,10 +11,10 @@ import java.util.*;
 
 import static org.mockito.Mockito.*;
 
-public class DFSTest {
+public class DFSExplorerTest {
 
     private ExplorationState mockState;
-    private DFS dfs;
+    private DFSExplorer dfsExplorer;
     private NodeStatus mockNodeStatus2;
     private NodeStatus mockNodeStatus3;
     private NodeStatus mockNodeStatus4;
@@ -23,7 +23,7 @@ public class DFSTest {
     @BeforeEach
     void setUp() {
         mockState = Mockito.mock(ExplorationState.class);
-        dfs = new DFS();
+        dfsExplorer = new DFSExplorer();
         mockNodeStatus2 = Mockito.mock(NodeStatus.class);
         mockNodeStatus3 = Mockito.mock(NodeStatus.class);
         mockNodeStatus4 = Mockito.mock(NodeStatus.class);
@@ -34,7 +34,7 @@ public class DFSTest {
     @Test
     void testBeginDFSWhenTargetReachedEverythingStops(){
         when(mockState.getDistanceToTarget()).thenReturn(0);
-        dfs.beginDFS(mockState);
+        dfsExplorer.beginDFS(mockState);
 
         verify(mockState, Mockito.never()).getNeighbours(); //As we are at our goal we should never try to getNeighbours again -
         verify(mockState, Mockito.never()).moveTo(anyLong()); //Or move to another tile
@@ -63,7 +63,7 @@ public class DFSTest {
                 List.of(mockNodeStatus5)
         );
 
-        dfs.beginDFS(mockState);
+        dfsExplorer.beginDFS(mockState);
 
         verify(mockState, times(1)).moveTo(5L);
 
@@ -81,7 +81,7 @@ public class DFSTest {
         when(mockState.getDistanceToTarget()).thenReturn(1,0);
         when(mockState.getNeighbours()).thenReturn(List.of(mockNodeStatus2));
 
-        dfs.beginDFS(mockState);
+        dfsExplorer.beginDFS(mockState);
 
         verify(mockState, times(1)).moveTo(2L);
     }

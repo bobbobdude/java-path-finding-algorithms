@@ -14,7 +14,7 @@ import java.util.Set;
  *
  * @author Thomas Gardner
  */
-public class DFS {
+public class DFSExplorer {
     /**
      * Begins the Depth-First Search (DFS) from the current location until the target is reached.
      *

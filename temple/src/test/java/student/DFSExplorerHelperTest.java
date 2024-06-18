@@ -12,7 +12,7 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class DFSHelperTest {
+public class DFSExplorerHelperTest {
 
     private ExplorationState mockState;
     private NodeStatus mockNodeStatus1;
