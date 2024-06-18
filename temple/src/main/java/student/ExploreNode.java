@@ -2,6 +2,8 @@ package student;
 
 import lombok.Getter;
 
+import java.util.Objects;
+
 @Getter
 public class ExploreNode {
     private final long longID;
@@ -42,8 +44,26 @@ public class ExploreNode {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof ExploreNode)) {
+            return false;
+        }
+        ExploreNode toCompareTo = (ExploreNode) obj;
+        return longID == toCompareTo.longID && visited == toCompareTo.visited && distanceToOrb == toCompareTo.distanceToOrb;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(longID, visited, distanceToOrb);
+    }
+
+
+    @Override
     public String toString() {
-        return "ExploreNode [longID=" + longID + ", visited=" + visited + "]";
+        return "ExploreNode [longID=" + longID + ", visited=" + visited + ", distanceToOrb=" + distanceToOrb + "]";
     }
 
 }

@@ -20,7 +20,7 @@ public class BFSHelper {
      * Converts the neighbors of the current state to their respective node IDs.
      *
      * <p>This method takes the current exploration state, retrieves the neighbors, and converts them to a
-     * collection of node IDs. This is useful for tracking which nodes have been visited and for constructing
+     * collection of ExploreNodes. This is useful for tracking which nodes have been visited and for constructing
      * the path during the BFS traversal.</p>
      *
      * @param state the current exploration state containing information about the node and its neighbors

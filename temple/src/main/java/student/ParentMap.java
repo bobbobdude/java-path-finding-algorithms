@@ -12,10 +12,6 @@ public class ParentMap{
 
         }
 
-        else {
-            System.out.println("That key already exists, no need to add it again my padawan :)");
-        }
-
     }
 
     public Set<ExploreNode> getNeighboursFromParentMap(Long nodeIDKey){
