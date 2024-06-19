@@ -1,6 +1,7 @@
 package student;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Objects;
 
@@ -8,7 +9,8 @@ import java.util.Objects;
 public class ExploreNode {
     private final long longID;
 
-    private final boolean visited;
+    @Setter
+    private boolean visited;
 
     private final int distanceToOrb;
 
@@ -28,7 +30,6 @@ public class ExploreNode {
         }
 
         for (ExploreNode node : mapToCheck.getAllNodesInMap()){//We've visited the node as it is already included in one of the sets of neighbours
-            //System.out.println("Checking node " + node.getLongID() + " against " + longID);
             if (longID == node.longID) {
                 oneOfNeighbours = true;
                 break;

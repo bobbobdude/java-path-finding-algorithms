@@ -10,7 +10,18 @@ public class ParentMap{
         if (!parentMap.containsKey(nodeIDKey)){
             parentMap.put(nodeIDKey, neighbours); //If the current Node is not contained within the keys create it and add the neighbours
 
+            //This makes sure all previous nodes that were marked as unvisited are now marked as visited if we add them as a node id key (meaning we are on them)
+            for (ExploreNode nodeAlreadyInMap : getAllNodesInMap()){
+                if(nodeAlreadyInMap.getLongID() == nodeIDKey){
+                    nodeAlreadyInMap.setVisited(true);
+                }
+            }
+
+
         }
+/*        else{
+            parentMap.get(nodeIDKey).addAll(neighbours);
+        }*/
 
     }
 
@@ -26,6 +37,8 @@ public class ParentMap{
             throw new NoSuchElementException();
         }
     }
+
+
 
     public Set<Long> getAllKeysInMap(){
         return parentMap.keySet();

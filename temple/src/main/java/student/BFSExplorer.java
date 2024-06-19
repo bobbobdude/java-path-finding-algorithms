@@ -4,6 +4,7 @@ package student;
 import game.ExplorationState;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static student.BFSHelper.convertNeighboursToSetOfExploreNodes;
 
@@ -11,39 +12,79 @@ public class BFSExplorer {
 
     // Method to find the orb using Breadth-First Search (BFS)
     public void findOrb(ExplorationState state) {
-        ParentMap map = new ParentMap();
+        ParentMap map = new ParentMap();//Map of all traversed nodes with their  neighbours in no particular order
+        ArrayList<Long> pathTaken = new ArrayList<>();
 
-        int x = 0;
+        while(state.getDistanceToTarget() > 0){
+            map.addNeighbours(state.getCurrentLocation(), convertNeighboursToSetOfExploreNodes(state,map));
 
-        while (state.getDistanceToTarget() > 0){
-            map.addNeighbours(state.getCurrentLocation(), convertNeighboursToSetOfExploreNodes(state, map));
-            Set<ExploreNode> neighboursToVisit;
+            Set<ExploreNode> currentNeighbours = map.getNeighboursFromParentMap(state.getCurrentLocation());
 
-            long nodeToMoveBackTo = state.getCurrentLocation();
-            neighboursToVisit = convertNeighboursToSetOfExploreNodes(state, map);
+            for(ExploreNode neighbour : currentNeighbours){
 
-            System.out.println("Times through while loop " + x + " : " + neighboursToVisit);
+                if(currentNeighbours.size() == 1){
 
-            //Goes to all neighbours and then returns to the original spot
-            for (ExploreNode neighbour : neighboursToVisit) {
-                //Don't need to return to original spot if there is only one neighbour - just keep swimming (will fix this later) Maybe also sorts out backtracking?
-                if (neighboursToVisit.size() == 1 || neighboursToVisit.stream().allMatch(ExploreNode::isVisited)){
-                    moveTo(state, neighbour.getLongID(), map);
+                    moveTo(state, neighbour.getLongID(), map, pathTaken); //Just keep going if there is only one neighbour, as we have no other option!
+
+                } else if (currentNeighbours.stream().filter(node -> !node.isVisited()).count() == 1) {
+
+
+
+                    ExploreNode unvisitedNeighbourToMoveTo = currentNeighbours.stream().filter(node -> !node.isVisited()).findFirst().get();
+                    moveTo(state, unvisitedNeighbourToMoveTo.getLongID(), map, pathTaken); //No need to move back if there is only one that isn't visited - just stay there
                     break;
-                }
-                else if (!neighbour.isVisited()){
-                    moveTo(state, neighbour.getLongID(), map);
-                    moveTo(state, nodeToMoveBackTo, map);
+
+                } else if (currentNeighbours.stream().filter(node -> !node.isVisited()).count() > 1){ //If we have more than one unvisited neighbour navigate to them and then back to the root (or the tile we came from)
+
+                    long longToMoveBackTo = state.getCurrentLocation();
+
+                    Set<ExploreNode> unexplored = currentNeighbours.stream().filter(node -> !node.isVisited()).collect(Collectors.toSet());
+
+                    for(ExploreNode unexploredNode : unexplored){
+                        moveTo(state, unexploredNode.getLongID(), map, pathTaken);
+                        if(state.getDistanceToTarget() == 0){
+                            break;
+                        }
+                        moveTo(state, longToMoveBackTo, map, pathTaken);
+                    }
+                    if(state.getDistanceToTarget() == 0){
+                        break;
+                    }
+                    ExploreNode closestToOrb = unexplored.stream().min(Comparator.comparingInt(ExploreNode::getDistanceToOrb)).get();
+                    moveTo(state, closestToOrb.getLongID(), map, pathTaken); //Finally move to neighbour that is closest to orb as why not - also probs more efficient.
+                    break;
+
+                } else if (currentNeighbours.stream().allMatch(ExploreNode::isVisited)){
+
+                    Long previousLocation = pathTaken.get(pathTaken.size()-2);
+                    state.moveTo(previousLocation);
+                    pathTaken.remove(pathTaken.size()-1);
+
+
+                    Set<ExploreNode> neighboursNow = map.getNeighboursFromParentMap(state.getCurrentLocation());
+
+
+
+
+                    if(neighboursNow.stream().anyMatch(node -> !node.isVisited())){
+                        break;
+                    }
+
+
+
                 }
             }
-            x++;
 
         }
+
     }
 
-    public void moveTo(ExplorationState state, long nodeToMoveTo, ParentMap mapToModify) {
+
+
+    public void moveTo(ExplorationState state, long nodeToMoveTo, ParentMap mapToModify, ArrayList<Long> pathTaken) {
         state.moveTo(nodeToMoveTo);
-        mapToModify.addNeighbours(state.getCurrentLocation(), convertNeighboursToSetOfExploreNodes(state, mapToModify));
+        mapToModify.addNeighbours(nodeToMoveTo, convertNeighboursToSetOfExploreNodes(state, mapToModify));
+        pathTaken.add(nodeToMoveTo);
     }
 
 }

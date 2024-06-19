@@ -44,8 +44,8 @@ public class BFSExplorerHelperTest {
         Set<ExploreNode> testExploreNodes = BFSHelper.convertNeighboursToSetOfExploreNodes(mockState, testMap);
 
         //Manually create correct ExploreNodes
-        ExploreNode exploreNode1 = new ExploreNode(98l, 98, testMap2);
-        ExploreNode exploreNode2 = new ExploreNode(99l, 99, testMap2); //An empty test map, so they are not ignored (not sure if necessary)
+        ExploreNode exploreNode1 = new ExploreNode(98L, 98, testMap2);
+        ExploreNode exploreNode2 = new ExploreNode(99L, 99, testMap2); //An empty test map, so they are not ignored (not sure if necessary)
 
         assertEquals(testExploreNodes, Set.of(exploreNode1,exploreNode2));
     }
