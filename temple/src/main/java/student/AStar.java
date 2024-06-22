@@ -124,8 +124,12 @@ public class AStar {
                 if (!closed.contains(neighbour)) { // Only evaluate neighbours that have not been visited
                     // Check if g score for neighbour already exists, meaning it is already visited
                     Integer currentGScore = gScores.getOrDefault(neighbour, Integer.MAX_VALUE);
-                    // Calculate new g score from distance between current node and neighbour
-                    Integer newGScore = gScores.getOrDefault(cur, Integer.MAX_VALUE) + cur.getEdge(neighbour).length;
+                    /*
+                     Calculate new g score from distance between current node and neighbour, taking into account gold
+                     This is not a true g score as a true g score is based solely on distance, but this yields
+                     better results for gold collection
+                    */
+                    Integer newGScore = gScores.getOrDefault(cur, Integer.MAX_VALUE) + heuristic(cur, neighbour);
                     /*
                      If new g score is lower, path through current node is better than any
                       previously discovered path to neighbour, therefore we want to carry on traversing this path
