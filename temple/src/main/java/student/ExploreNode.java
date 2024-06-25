@@ -5,6 +5,21 @@ import lombok.Setter;
 
 import java.util.Objects;
 
+/**
+ * This class takes every element provided by node status and stores it/"wraps it" within an
+ * ExploreNode object.
+ * The reason for this is that it allows us to additionally store a boolean value which marks
+ * whether it has been visited or not.
+ *
+ * <p>To determine this we pass the
+ * ParentMap to the constructor which allows the internal logic to determine
+ * whether a node should be set to true or not.
+ * This is a vital part of my DFS solution as it forms the backbone of the ParentMap class which allows us
+ * to build a more complete picture of the cavern, based on where we have discovered.
+ *
+ * @author Thomas Gardner
+ */
+
 @Getter
 public class ExploreNode {
     private final long longID;

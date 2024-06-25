@@ -8,9 +8,24 @@ import java.util.stream.Collectors;
 
 import static student.BFSHelper.convertNeighboursToSetOfExploreNodes;
 
+/**
+ * This class is responsible for providing a findOrb method that will
+ * always return at the orb after searching through the maze in a "breadth first manner"
+ * manner, backtracking when necessary to find an unvisited tile.
+ *
+ * @author Thomas Gardner
+ */
+
 public class BFSExplorer {
 
-    // Method to find the orb using Breadth-First Search (BFS)
+    /**
+     * Begins the Breadth-First Search (DFS) from the current location until the target is reached.
+     *
+     * @param state the current exploration state containing information about the node, its neighbors, and the target
+     *
+     * @author Thomas Gardner
+     */
+
     public void findOrb(ExplorationState state) {
         ParentMap map = new ParentMap();//Map of all traversed nodes with their  neighbours in no particular order
         ArrayList<Long> pathTaken = new ArrayList<>();
@@ -79,6 +94,9 @@ public class BFSExplorer {
 
     }
 
+    //-4152836868077314850
+    //-3967848802208875438
+    //5864101433891852061
 
 
     public void moveTo(ExplorationState state, long nodeToMoveTo, ParentMap mapToModify, ArrayList<Long> pathTaken) {

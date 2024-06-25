@@ -22,7 +22,7 @@ public class DFSExplorer {
      *
      * @author Thomas Gardner
      */
-    public void beginDFS(ExplorationState state) {
+    public void findOrb(ExplorationState state) {
         Collection<Long> neighbours;
         ArrayList<Long> path = new ArrayList<>();
         Set<Long> visited = new HashSet<>(); //Changed to hashset as more efficient and don't need to maintain order of visited -> O(n) to O(1)

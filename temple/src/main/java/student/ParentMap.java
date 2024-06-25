@@ -2,6 +2,16 @@ package student;
 
 import java.util.*;
 
+/**
+ * This class which I want to call a data structure class (simply because it sounds cool and smart)
+ * is responsible for maintaining and correctly manipulating the parentMap variable.
+ *
+ * <p>This stores every visited tile, using the Long ID as a key and the ExploreNodes as the value.
+ * This allows me to track every node that is visited as well as the nodes we are yet to visit.
+ *
+ * @author Thomas Gardner
+ */
+
 public class ParentMap{
     Map<Long, Set<ExploreNode>> parentMap = new HashMap<>();
 
