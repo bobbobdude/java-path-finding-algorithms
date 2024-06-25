@@ -6,9 +6,14 @@ import lombok.Getter;
 
 import java.util.*;
 
+/**
+ * This class implements an escape from the cavern to maximise gold collection with the A* path finding algorithm
+ *
+ * @author Daisy Riley
+ */
 public class AStar {
 
-    // Hash map of all nodes that have gold, along with the amount of hold
+    // Hash map of all nodes that have gold, along with the amount of gold
     private final Map<Node, Integer> goldLocations = new HashMap<>();
 
     // The NodeWrapper class allows use of a PriorityQueue, with sorting based on f scores
