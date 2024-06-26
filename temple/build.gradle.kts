@@ -24,6 +24,9 @@ dependencies {
     // This dependency is used by the application.
     implementation("com.google.guava:guava:31.1-jre")
     errorprone("com.google.errorprone:error_prone_core:latest.release")
+    testImplementation("org.mockito:mockito-core:5.12.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -36,4 +39,8 @@ java {
 application {
     // Define the main class for the application.
     mainClass.set(project.findProperty("chooseMain").toString())
+}
+
+tasks.test{
+    useJUnitPlatform()
 }
