@@ -97,7 +97,7 @@ public class AStarTest {
     }
 
     @Test
-    void testTraverse() {
+    void testTraverseThroughMultipleNodes() {
         aStar = new AStar(constructorNodes);
 
         when(mockNode1.getNeighbours()).thenReturn(Set.of(mockNode2));
@@ -127,6 +127,57 @@ public class AStarTest {
             assertEquals(e.getMessage(), "There are no possible paths");
         }
     }
+
+    @Test
+    void testTraverseDirectPathToExit() {
+        when(mockTile1.getGold()).thenReturn(0);
+        when(mockTileExit.getGold()).thenReturn(0);
+        aStar = new AStar(constructorNodes);
+
+        // Set up neighbors and time remaining
+        when(mockNode1.getNeighbours()).thenReturn(Set.of(mockNodeExit)); // Direct path to exit
+        when(mockNodeExit.getNeighbours()).thenReturn(Set.of(mockNode1));
+
+        when(mockState.getTimeRemaining()).thenReturn(5);
+
+        try {
+            aStar.traverse(mockState);
+        } catch (Exception e) {
+            fail();
+        }
+
+        verify(mockState).moveTo(mockNodeExit);
+        verify(mockState, never()).pickUpGold();
+    }
+
+    @Test
+    void testTraverseStartOnExit() {
+        aStar = new AStar(new HashSet<>(Collections.singletonList(mockNodeExit)));
+        when(mockState.getCurrentNode()).thenReturn(mockNodeExit);
+
+        try {
+            aStar.traverse(mockState);
+        } catch (Exception e) {
+            fail();
+        }
+
+        verify(mockState, never()).pickUpGold();
+        verify(mockState, never()).moveTo(mockNodeExit);
+    }
+
+    @Test
+    void testTraverseInsufficientTimeToReachExit() {
+        aStar = new AStar(constructorNodes);
+        when(mockState.getTimeRemaining()).thenReturn(2);
+
+        try {
+            aStar.traverse(mockState);
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "There are no possible paths");
+        }
+        verify(mockState, never()).moveTo(mockNodeExit);
+    }
+
 
     @AfterEach
     void tearDown() {

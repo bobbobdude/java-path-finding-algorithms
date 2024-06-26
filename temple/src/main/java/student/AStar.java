@@ -69,6 +69,7 @@ public class AStar {
         List<Node> path;
         while (state.getCurrentNode() != state.getExit()) { // Must end on exit node
             Node target = state.getExit();
+
             for (Node goldNode : goldLocations.keySet()) { // Try to find paths containing gold
                 // Check there is enough time to reach the gold and exit before proceeding
                 if (state.getTimeRemaining() >=
@@ -81,8 +82,7 @@ public class AStar {
             path = findPath(state.getCurrentNode(), target);
             if (path.isEmpty()) {
                 throw new Exception("There are no possible paths");
-            }
-            else {
+            } else {
                 for (Node node : path) { // Move through path and pick up gold
                     state.moveTo(node);
                     if (goldLocations.containsKey(node)) {
