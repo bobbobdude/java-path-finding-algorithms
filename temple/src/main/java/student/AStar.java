@@ -65,7 +65,7 @@ public class AStar {
      *
      * @param state The current game state during escape
      */
-    public void traverse(EscapeState state) {
+    public void traverse(EscapeState state) throws Exception {
         List<Node> path;
         while (state.getCurrentNode() != state.getExit()) { // Must end on exit node
             Node target = state.getExit();
@@ -79,11 +79,16 @@ public class AStar {
                 }
             }
             path = findPath(state.getCurrentNode(), target);
-            for (Node node : path) { // Move through path and pick up gold
-                state.moveTo(node);
-                if (goldLocations.containsKey(node)) {
-                    state.pickUpGold();
-                    goldLocations.remove(node); // Delete from gold list after pickup to avoid looping over needlessly
+            if (path.isEmpty()) {
+                throw new Exception("There are no possible paths");
+            }
+            else {
+                for (Node node : path) { // Move through path and pick up gold
+                    state.moveTo(node);
+                    if (goldLocations.containsKey(node)) {
+                        state.pickUpGold();
+                        goldLocations.remove(node); // Delete from gold list after pickup to avoid looping over needlessly
+                    }
                 }
             }
         }

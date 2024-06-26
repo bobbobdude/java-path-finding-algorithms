@@ -11,7 +11,7 @@ import org.mockito.Mockito;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class AStarTest {
@@ -106,9 +106,26 @@ public class AStarTest {
 
         when(mockState.getTimeRemaining()).thenReturn(10);
 
-        aStar.traverse(mockState);
+        try {
+            aStar.traverse(mockState);
+        } catch (Exception e) {
+            fail();
+        }
 
         verify(mockState).moveTo(mockNodeExit);
+    }
+
+    @Test
+    void testTraverseNoNeighborsForCurrentNode() {
+        aStar = new AStar(constructorNodes);
+
+        when(mockNode1.getNeighbours()).thenReturn(Collections.emptySet());
+
+        try {
+            aStar.traverse(mockState);
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "There are no possible paths");
+        }
     }
 
     @AfterEach

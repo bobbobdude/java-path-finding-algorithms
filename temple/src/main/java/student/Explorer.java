@@ -68,6 +68,11 @@ public class Explorer {
     public void escape(EscapeState state) {
         Collection<Node> cavernNodes = state.getVertices();
         AStar aStar = new AStar(cavernNodes);
-        aStar.traverse(state);
+        try {
+            aStar.traverse(state);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 }
