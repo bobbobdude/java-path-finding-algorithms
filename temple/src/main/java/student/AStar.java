@@ -14,6 +14,7 @@ import java.util.*;
 public class AStar {
 
     // Hash map of all nodes that have gold, along with the amount of gold
+    @Getter
     private final Map<Node, Integer> goldLocations = new HashMap<>();
 
     // The NodeWrapper class allows use of a PriorityQueue, with sorting based on f scores

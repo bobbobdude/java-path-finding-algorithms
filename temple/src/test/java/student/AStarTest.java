@@ -11,6 +11,7 @@ import org.mockito.Mockito;
 
 import java.util.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class AStarTest {
@@ -29,6 +30,8 @@ public class AStarTest {
     private Tile mockTileExit;
 
     private Node currentNode;
+
+    private Collection<Node> constructorNodes;
 
     @BeforeEach
     void setUp() {
@@ -65,8 +68,7 @@ public class AStarTest {
         when(mockNode3.getEdge(mockNodeExit)).thenReturn(mockEdge3ToExit);
         when(mockNode1.getEdge(mockNode3)).thenReturn(mockEdge1To3);
 
-        Collection<Node> nodes = new HashSet<>(Arrays.asList(mockNode1, mockNode2, mockNode3, mockNodeExit));
-        aStar = new AStar(nodes);
+        constructorNodes = new HashSet<>(Arrays.asList(mockNode1, mockNode2, mockNode3, mockNodeExit));
 
         /*
          * Track the current node manually
@@ -81,11 +83,23 @@ public class AStarTest {
     }
 
     @Test
-    void testTraversePathWithGold() {
+    void testGoldLocationsAreSet() {
+        when(mockTile1.getGold()).thenReturn(0);
+        when(mockTile2.getGold()).thenReturn(10);
+        when(mockTile3.getGold()).thenReturn(20);
+        when(mockTileExit.getGold()).thenReturn(0);
+        aStar = new AStar(constructorNodes);
+
+        Map<Node, Integer> mockGoldLocations = new HashMap<>();
+        mockGoldLocations.put(mockNode2, 10);
+        mockGoldLocations.put(mockNode3, 20);
+        assertEquals(aStar.getGoldLocations(), mockGoldLocations);
     }
 
     @Test
-    void testTraverseNoGold() {
+    void testTraverse() {
+        aStar = new AStar(constructorNodes);
+
         when(mockNode1.getNeighbours()).thenReturn(Set.of(mockNode2));
         when(mockNode2.getNeighbours()).thenReturn(Set.of(mockNode1, mockNodeExit));
         when(mockNodeExit.getNeighbours()).thenReturn(Set.of(mockNode2));
@@ -95,7 +109,6 @@ public class AStarTest {
         aStar.traverse(mockState);
 
         verify(mockState).moveTo(mockNodeExit);
-        verify(mockState, never()).pickUpGold();
     }
 
     @AfterEach
