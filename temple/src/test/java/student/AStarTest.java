@@ -4,15 +4,16 @@ import game.Edge;
 import game.EscapeState;
 import game.Node;
 import game.Tile;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 public class AStarTest {
 
@@ -99,7 +100,6 @@ public class AStarTest {
     @Test
     void testTraverseThroughMultipleNodes() {
         aStar = new AStar(constructorNodes);
-
         when(mockNode1.getNeighbours()).thenReturn(Set.of(mockNode2));
         when(mockNode2.getNeighbours()).thenReturn(Set.of(mockNode1, mockNodeExit));
         when(mockNodeExit.getNeighbours()).thenReturn(Set.of(mockNode2));
@@ -118,7 +118,6 @@ public class AStarTest {
     @Test
     void testTraverseNoNeighborsForCurrentNode() {
         aStar = new AStar(constructorNodes);
-
         when(mockNode1.getNeighbours()).thenReturn(Collections.emptySet());
 
         try {
@@ -130,14 +129,9 @@ public class AStarTest {
 
     @Test
     void testTraverseDirectPathToExit() {
-        when(mockTile1.getGold()).thenReturn(0);
-        when(mockTileExit.getGold()).thenReturn(0);
         aStar = new AStar(constructorNodes);
-
-        // Set up neighbors and time remaining
-        when(mockNode1.getNeighbours()).thenReturn(Set.of(mockNodeExit)); // Direct path to exit
+        when(mockNode1.getNeighbours()).thenReturn(Set.of(mockNodeExit));
         when(mockNodeExit.getNeighbours()).thenReturn(Set.of(mockNode1));
-
         when(mockState.getTimeRemaining()).thenReturn(5);
 
         try {
