@@ -67,19 +67,30 @@ public class AStar {
      */
     public void traverse(EscapeState state) throws Exception {
         List<Node> path;
+        Node target = state.getExit();
+        List<Node> exitPath = findPath(state.getCurrentNode(), target);
         while (state.getCurrentNode() != state.getExit()) { // Must end on exit node
-            Node target = state.getExit();
-
+            path = exitPath;
             for (Node goldNode : goldLocations.keySet()) { // Try to find paths containing gold
                 // Check there is enough time to reach the gold and exit before proceeding
+                List<Node> goldPath = findPath(state.getCurrentNode(), goldNode);
+                List<Node> tentativeExitPath = findPath(goldNode, state.getExit());
                 if (state.getTimeRemaining() >=
-                        pathTraversalDuration(state.getCurrentNode(), findPath(state.getCurrentNode(), goldNode))
-                        + pathTraversalDuration(goldNode, findPath(goldNode, state.getExit()))) {
+                        pathTraversalDuration(state.getCurrentNode(), goldPath)
+                        + pathTraversalDuration(goldNode, tentativeExitPath)) {
+                    // We have enough time to go here, so update path and target
                     target = goldNode;
+                    path = findPath(state.getCurrentNode(), target);
+                    /*
+                     Update exit path so it can be used on next iteration in case there is not enough time
+                     This can't be calculcated dynamically as calculcated paths will change after gold is collected,
+                     which we know will happen as the target has been set to a gold node.
+                     This isn't needed 99% of the time, but escape fails sometimes without it
+                    */
+                    exitPath = tentativeExitPath;
                     break;
                 }
             }
-            path = findPath(state.getCurrentNode(), target);
             if (path.isEmpty()) {
                 throw new Exception("There are no possible paths");
             } else {
