@@ -37,8 +37,8 @@ public class Explorer {
      */
     public void explore(ExplorationState state) {
         //TODO : Explore the cavern and find the orb
-        BFSExplorer bfsExplorer = new BFSExplorer();
-        bfsExplorer.findOrb(state);
+        DFSHeuristicsExplorer dfsHeuristicsExplorer = new DFSHeuristicsExplorer();
+        dfsHeuristicsExplorer.findOrb(state);
     }
 
     /**
