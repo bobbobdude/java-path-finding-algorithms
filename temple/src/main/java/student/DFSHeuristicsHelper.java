@@ -7,9 +7,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * The BFSHelper class provides utility methods to assist with the Breadth-First Search (BFS) algorithm.
+ * The  DFSHeuristicsHelper class provides utility methods to assist with the DFSHeuristics algorithm.
  *
- * <p>This class includes methods that facilitate the BFS algorithm by converting neighbors of the current state
+ * <p>This class includes methods that facilitate the DFSHeuristics algorithm by converting neighbors of the current state
  * to their respective node IDs, allowing for efficient tracking of visited nodes and path creation.</p>
  *
  * <p>Author: Thomas Gardner</p>
