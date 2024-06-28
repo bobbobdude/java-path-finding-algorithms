@@ -5,7 +5,7 @@ import game.ExplorationState;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static student.BFSHelper.convertNeighboursToSetOfExploreNodes;
+import static student.DFSHeuristicsHelper.convertNeighboursToSetOfExploreNodes;
 
 /**
  * This class is responsible for providing a findOrb method that will
