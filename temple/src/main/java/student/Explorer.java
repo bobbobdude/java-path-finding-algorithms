@@ -71,7 +71,7 @@ public class Explorer {
         try {
             aStar.traverse(state);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.error(e.getMessage());
         }
 
     }
