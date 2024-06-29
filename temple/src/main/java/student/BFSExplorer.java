@@ -5,7 +5,7 @@ import game.ExplorationState;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import static student.MoveHelperClass.*;
+import static student.MoveHelper.*;
 
 import static student.ParentMapHelper.convertNeighboursToSetOfExploreNodes;
 
@@ -20,7 +20,7 @@ import static student.ParentMapHelper.convertNeighboursToSetOfExploreNodes;
 public class BFSExplorer {
 
     /**
-     * Begins the Breadth-First Search (DFS) from the current location until the target is reached.
+     * Begins the Breadth-First Search (BFS) from the current location until the target is reached.
      *
      * @param state the current exploration state containing information about the node, its neighbors, and the target
      *
@@ -33,27 +33,18 @@ public class BFSExplorer {
 
         while(state.getDistanceToTarget() > 0){
             map.addNeighbours(state.getCurrentLocation(), convertNeighboursToSetOfExploreNodes(state,map));
-
             Set<ExploreNode> currentNeighbours = map.getNeighboursFromParentMap(state.getCurrentLocation());
 
             for(ExploreNode neighbour : currentNeighbours){
-
                 if(currentNeighbours.size() == 1){
-
                     moveTo(state, neighbour.getLongID(), map, pathTaken); //Just keep going if there is only one neighbour, as we have no other option!
-
                 } else if (currentNeighbours.stream().filter(node -> !node.isVisited()).count() == 1) {
-
-
-
                     ExploreNode unvisitedNeighbourToMoveTo = currentNeighbours.stream().filter(node -> !node.isVisited()).findFirst().get();
                     moveTo(state, unvisitedNeighbourToMoveTo.getLongID(), map, pathTaken); //No need to move back if there is only one that isn't visited - just stay there
                     break;
 
                 } else if (currentNeighbours.stream().filter(node -> !node.isVisited()).count() > 1){ //If we have more than one unvisited neighbour navigate to them and then back to the root (or the tile we came from)
-
                     long longToMoveBackTo = state.getCurrentLocation();
-
                     Set<ExploreNode> unexplored = currentNeighbours.stream().filter(node -> !node.isVisited()).collect(Collectors.toSet());
 
                     for(ExploreNode unexploredNode : unexplored){
@@ -71,23 +62,14 @@ public class BFSExplorer {
                     break;
 
                 } else if (currentNeighbours.stream().allMatch(ExploreNode::isVisited)){
-
                     Long previousLocation = pathTaken.get(pathTaken.size()-2);
                     state.moveTo(previousLocation);
                     pathTaken.remove(pathTaken.size()-1);
-
-
                     Set<ExploreNode> neighboursNow = map.getNeighboursFromParentMap(state.getCurrentLocation());
-
-
-
 
                     if(neighboursNow.stream().anyMatch(node -> !node.isVisited())){
                         break;
                     }
-
-
-
                 }
             }
 

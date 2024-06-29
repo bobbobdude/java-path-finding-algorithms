@@ -11,8 +11,6 @@ import java.util.Arrays;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.when;
 
 public class BFSExplorerHelperTest {
 
@@ -28,7 +26,7 @@ public class BFSExplorerHelperTest {
         mockNodeStatus2 = Mockito.mock(NodeStatus.class);
 
         mockState = Mockito.mock(ExplorationState.class);
-        when(mockState.getNeighbours()).thenReturn(Arrays.asList(mockNodeStatus1,mockNodeStatus2));
+        Mockito.when(mockState.getNeighbours()).thenReturn(Arrays.asList(mockNodeStatus1,mockNodeStatus2));
 
         Mockito.when(mockNodeStatus1.nodeID()).thenReturn(98L);
         Mockito.when(mockNodeStatus1.distanceToTarget()).thenReturn(98);
@@ -56,6 +54,6 @@ public class BFSExplorerHelperTest {
         testMap2 = null;
         mockNodeStatus1 = null;
         mockNodeStatus2 = null;
-        reset(mockState);
+        Mockito.reset(mockState);
     }
 }

@@ -5,7 +5,7 @@ import game.ExplorationState;
 import java.util.*;
 
 import static student.ParentMapHelper.convertNeighboursToSetOfExploreNodes;
-import static student.MoveHelperClass.*;
+import static student.MoveHelper.*;
 
 /**
  * This class is responsible for providing a findOrb method that will

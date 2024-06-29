@@ -9,9 +9,6 @@ import org.mockito.Mockito;
 
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
 
 public class DFSHeuristicsExplorerTest {
 
@@ -38,28 +35,28 @@ public class DFSHeuristicsExplorerTest {
 
     @Test
     void testFindOrbWhenTargetReachedEverythingStops(){
-        when(mockState.getDistanceToTarget()).thenReturn(0);
+        Mockito.when(mockState.getDistanceToTarget()).thenReturn(0);
         dfsHeuristicsExplorer.findOrb(mockState);
 
-        verify(mockState, Mockito.never()).getNeighbours(); //As we are at our goal we should never try to getNeighbours again -
-        verify(mockState, Mockito.never()).moveTo(anyLong()); //Or move to another tile
+        Mockito.verify(mockState, Mockito.never()).getNeighbours(); //As we are at our goal we should never try to getNeighbours again -
+        Mockito.verify(mockState, Mockito.never()).moveTo(Mockito.anyLong()); //Or move to another tile
     }
 
 
     @Test
     void testFindOrbGoesToOnlyNeighbour(){
 
-        NodeStatus mockNodeStatus2 = mock(NodeStatus.class);
+        NodeStatus mockNodeStatus2 = Mockito.mock(NodeStatus.class);
 
-        when(mockNodeStatus2.nodeID()).thenReturn(2L);
+        Mockito.when(mockNodeStatus2.nodeID()).thenReturn(2L);
 
-        when(mockState.getCurrentLocation()).thenReturn(1L);
-        when(mockState.getDistanceToTarget()).thenReturn(1,0);
-        when(mockState.getNeighbours()).thenReturn(List.of(mockNodeStatus2));
+        Mockito.when(mockState.getCurrentLocation()).thenReturn(1L);
+        Mockito.when(mockState.getDistanceToTarget()).thenReturn(1,0);
+        Mockito.when(mockState.getNeighbours()).thenReturn(List.of(mockNodeStatus2));
 
         dfsHeuristicsExplorer.findOrb(mockState);
 
-        verify(mockState, times(1)).moveTo(2L);
+        Mockito.verify(mockState, Mockito.times(1)).moveTo(2L);
     }
 
     @AfterEach

@@ -11,7 +11,7 @@ import static student.ParentMapHelper.convertNeighboursToSetOfExploreNodes;
  *
  * @author Thomas Gardner
  */
-public class MoveHelperClass {
+public class MoveHelper {
     public static void moveTo(ExplorationState state, long nodeToMoveTo, ParentMap mapToModify, List<Long> pathTaken) {
         state.moveTo(nodeToMoveTo);
         mapToModify.addNeighbours(nodeToMoveTo, convertNeighboursToSetOfExploreNodes(state, mapToModify));

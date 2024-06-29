@@ -9,7 +9,6 @@ import org.mockito.Mockito;
 
 import java.util.*;
 
-import static org.mockito.Mockito.*;
 
 public class DFSExplorerTest {
 
@@ -33,11 +32,11 @@ public class DFSExplorerTest {
 
     @Test
     void testFindOrbWhenTargetReachedEverythingStops(){
-        when(mockState.getDistanceToTarget()).thenReturn(0);
+        Mockito.when(mockState.getDistanceToTarget()).thenReturn(0);
         dfsExplorer.findOrb(mockState);
 
-        verify(mockState, Mockito.never()).getNeighbours(); //As we are at our goal we should never try to getNeighbours again -
-        verify(mockState, Mockito.never()).moveTo(anyLong()); //Or move to another tile
+        Mockito.verify(mockState, Mockito.never()).getNeighbours(); //As we are at our goal we should never try to getNeighbours again -
+        Mockito.verify(mockState, Mockito.never()).moveTo(Mockito.anyLong()); //Or move to another tile
     }
 
     /**
@@ -49,14 +48,14 @@ public class DFSExplorerTest {
     @Test
     void testFindOrbWhenThereIsClearPathToTarget() {
 
-        when(mockNodeStatus2.nodeID()).thenReturn(2L);
-        when(mockNodeStatus3.nodeID()).thenReturn(3L);
-        when(mockNodeStatus4.nodeID()).thenReturn(4L);
-        when(mockNodeStatus5.nodeID()).thenReturn(5L);
+        Mockito.when(mockNodeStatus2.nodeID()).thenReturn(2L);
+        Mockito.when(mockNodeStatus3.nodeID()).thenReturn(3L);
+        Mockito.when(mockNodeStatus4.nodeID()).thenReturn(4L);
+        Mockito.when(mockNodeStatus5.nodeID()).thenReturn(5L);
 
-        when(mockState.getCurrentLocation()).thenReturn(1L);
-        when(mockState.getDistanceToTarget()).thenReturn( 4,3,2, 1, 0);
-        when(mockState.getNeighbours()).thenReturn(
+        Mockito.when(mockState.getCurrentLocation()).thenReturn(1L);
+        Mockito.when(mockState.getDistanceToTarget()).thenReturn( 4,3,2, 1, 0);
+        Mockito.when(mockState.getNeighbours()).thenReturn(
                 List.of(mockNodeStatus2),
                 List.of(mockNodeStatus3),
                 List.of(mockNodeStatus4),
@@ -65,7 +64,7 @@ public class DFSExplorerTest {
 
         dfsExplorer.findOrb(mockState);
 
-        verify(mockState, times(1)).moveTo(5L);
+        Mockito.verify(mockState, Mockito.times(1)).moveTo(5L);
 
 
     }
@@ -73,17 +72,17 @@ public class DFSExplorerTest {
     @Test
     void testFindOrbGoesToOnlyNeighbour(){
 
-        NodeStatus mockNodeStatus2 = mock(NodeStatus.class);
+        NodeStatus mockNodeStatus2 = Mockito.mock(NodeStatus.class);
 
-        when(mockNodeStatus2.nodeID()).thenReturn(2L);
+        Mockito.when(mockNodeStatus2.nodeID()).thenReturn(2L);
 
-        when(mockState.getCurrentLocation()).thenReturn(1L);
-        when(mockState.getDistanceToTarget()).thenReturn(1,0);
-        when(mockState.getNeighbours()).thenReturn(List.of(mockNodeStatus2));
+        Mockito.when(mockState.getCurrentLocation()).thenReturn(1L);
+        Mockito.when(mockState.getDistanceToTarget()).thenReturn(1,0);
+        Mockito.when(mockState.getNeighbours()).thenReturn(List.of(mockNodeStatus2));
 
         dfsExplorer.findOrb(mockState);
 
-        verify(mockState, times(1)).moveTo(2L);
+        Mockito.verify(mockState, Mockito.times(1)).moveTo(2L);
     }
 
     @AfterEach
