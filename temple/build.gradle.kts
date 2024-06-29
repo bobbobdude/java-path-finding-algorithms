@@ -25,10 +25,8 @@ dependencies {
     implementation("com.google.guava:guava:31.1-jre")
     errorprone("com.google.errorprone:error_prone_core:latest.release")
     implementation("org.mockito:mockito-core:5.12.0")
-
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
-
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -43,6 +41,6 @@ application {
     mainClass.set(project.findProperty("chooseMain").toString())
 }
 
-tasks.test{
+tasks.test {
     useJUnitPlatform()
 }

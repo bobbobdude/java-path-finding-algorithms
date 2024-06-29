@@ -29,10 +29,6 @@ public class ParentMap{
 
 
         }
-/*        else{
-            parentMap.get(nodeIDKey).addAll(neighbours);
-        }*/
-
     }
 
     public Set<ExploreNode> getNeighboursFromParentMap(Long nodeIDKey){
