@@ -3,9 +3,9 @@ package student;
 import game.ExplorationState;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
-import static student.DFSHeuristicsHelper.convertNeighboursToSetOfExploreNodes;
+import static student.ParentMapHelper.convertNeighboursToSetOfExploreNodes;
+import static student.MoveHelperClass.*;
 
 /**
  * This class is responsible for providing a findOrb method that will
@@ -55,11 +55,5 @@ public class DFSHeuristicsExplorer {
                 backtrackStack.push(currentLocation);
             }
         }
-    }
-
-    public void moveTo(ExplorationState state, long nodeToMoveTo, ParentMap mapToModify, ArrayList<Long> pathTaken) {
-        state.moveTo(nodeToMoveTo);
-        mapToModify.addNeighbours(nodeToMoveTo, convertNeighboursToSetOfExploreNodes(state, mapToModify));
-        pathTaken.add(nodeToMoveTo);
     }
 }

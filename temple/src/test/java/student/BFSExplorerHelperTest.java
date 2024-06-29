@@ -41,7 +41,7 @@ public class BFSExplorerHelperTest {
 
     @Test
     public void testConvertNeighboursToSetOfExploreNodes() {
-        Set<ExploreNode> testExploreNodes = BFSHelper.convertNeighboursToSetOfExploreNodes(mockState, testMap);
+        Set<ExploreNode> testExploreNodes = ParentMapHelper.convertNeighboursToSetOfExploreNodes(mockState, testMap);
 
         //Manually create correct ExploreNodes
         ExploreNode exploreNode1 = new ExploreNode(98L, 98, testMap2);

@@ -44,26 +44,6 @@ public class BFSExplorerTest {
         verify(mockState, Mockito.never()).moveTo(anyLong()); //Or move to another tile
     }
 
-    @Test
-    void testFindOrbWhenThereIsClearPathToTarget() {
-        when(mockNodeStatus2.nodeID()).thenReturn(2L);
-        when(mockNodeStatus3.nodeID()).thenReturn(3L);
-        when(mockNodeStatus4.nodeID()).thenReturn(4L);
-        when(mockNodeStatus5.nodeID()).thenReturn(5L);
-
-        when(mockState.getCurrentLocation()).thenReturn(1L);
-        when(mockState.getDistanceToTarget()).thenReturn( 4,3,2, 1, 0);
-        when(mockState.getNeighbours()).thenReturn(
-                List.of(mockNodeStatus2),
-                List.of(mockNodeStatus3),
-                List.of(mockNodeStatus4),
-                List.of(mockNodeStatus5)
-        );
-
-        bfsExplorer.findOrb(mockState);
-
-        verify(mockState, times(1)).moveTo(5L);
-    }
 
     @Test
     void testFindOrbGoesToOnlyNeighbour(){

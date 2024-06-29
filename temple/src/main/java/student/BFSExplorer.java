@@ -5,8 +5,9 @@ import game.ExplorationState;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import static student.MoveHelperClass.*;
 
-import static student.BFSHelper.convertNeighboursToSetOfExploreNodes;
+import static student.ParentMapHelper.convertNeighboursToSetOfExploreNodes;
 
 /**
  * This class is responsible for providing a findOrb method that will
@@ -94,15 +95,5 @@ public class BFSExplorer {
 
     }
 
-    //-4152836868077314850
-    //-3967848802208875438
-    //5864101433891852061
-
-
-    public void moveTo(ExplorationState state, long nodeToMoveTo, ParentMap mapToModify, ArrayList<Long> pathTaken) {
-        state.moveTo(nodeToMoveTo);
-        mapToModify.addNeighbours(nodeToMoveTo, convertNeighboursToSetOfExploreNodes(state, mapToModify));
-        pathTaken.add(nodeToMoveTo);
-    }
 
 }
