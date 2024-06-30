@@ -101,7 +101,7 @@ public class Node {
     }
 
     /**
-     * Return truee if ob is a Node with the same id as this one.
+     * Return true if ob is a Node with the same id as this one.
      */
     @Override
     public boolean equals(Object ob) {
