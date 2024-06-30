@@ -2,6 +2,9 @@ package student;
 
 import game.EscapeState;
 import game.ExplorationState;
+import game.Node;
+
+import java.util.Collection;
 
 public class Explorer {
 
@@ -36,7 +39,6 @@ public class Explorer {
      * @param state the information available at the current state
      */
     public void explore(ExplorationState state) {
-        //TODO : Explore the cavern and find the orb
         DFSHeuristicsExplorer heuristicsExplorer = new DFSHeuristicsExplorer();
         heuristicsExplorer.findOrb(state);
     }
@@ -65,5 +67,12 @@ public class Explorer {
      * @param state the information available at the current state
      */
     public void escape(EscapeState state) {
+        Collection<Node> cavernNodes = state.getVertices();
+        AStar aStar = new AStar(cavernNodes);
+        try {
+            aStar.traverse(state);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
